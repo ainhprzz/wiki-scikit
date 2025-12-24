@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  bookstack:
+    image: linuxserver/bookstack:latest
+    container_name: bookstack
+    ports:
+      - "80:80"
+    environment:
+      # Datos de conexión a la BD externa
+      DB_CONNECTION: postgres
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_DATABASE: ${DB_NAME}
+      DB_USERNAME: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      
+      # URL pública de tu BookStack (Render te da una)
+      APP_URL: https://wiki-scikit.onrender.com
+
+      # Opcional: ajusta idioma
+      APP_LOCALE: es
+
+    volumes:
+      # Carpetas para datos persistentes
+      - ./bookstack-data:/config
+      - ./bookstack-data/uploads:/var/www/bookstack/public/uploads
+
+    restart: always
